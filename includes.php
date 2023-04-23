@@ -1,14 +1,12 @@
 <?php
-
 header('Content-type: application/json');
 
+$logs_base="/home/dan/projects/nylas/webhooks/logs";
 
-$message_base="/tmp/";
-$event_base="/tmp";
-
-$token="__NYLAS_ACCESS_TOKEN__";
 // $nylas_api_server = 'https://api.nylas.com';
 $nylas_api_server = 'https://ireland.api.nylas.com';
+$client_id = '_YOUR_NYLAS_CLIENT_ID_';
+$client_secret = '_YOU_NYLAS_CLIENT_SECRET_';
 
 
 function getMessageById($id, $token, $base) {
@@ -33,6 +31,33 @@ function getMessageById($id, $token, $base) {
 
     return json_decode($response, true);
 }
+
+
+
+
+function makeCurlRequest($request_uri, $requestType="POST", $payload = [], $token='') {
+
+    $encoded_payload = json_encode($payload);
+    $url = 'https://ireland.api.nylas.com' . $request_uri;
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json',
+    'Authorization: Bearer ' . $token,
+    ]);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_ENCODING, '');
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $requestType);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $encoded_payload);
+
+    $response = curl_exec($curl);
+    #print($response);
+    return json_decode($response, true);
+}
+
+
 
 
 ?>
