@@ -1,4 +1,6 @@
 <?php
+include_once("../includes.php");
+
 $challenge_parameter = (isset($_GET["challenge"]) ? $_GET["challenge"] : null);
 
 if ($challenge_parameter) {
@@ -11,15 +13,12 @@ if ($challenge_parameter) {
 # @todo https://developer.nylas.com/docs/developer-tools/webhooks/#verify-nylas-webhooks
 
 # Now process the payload for the webhook
-
-
 print ('Event Created Webhook');
 
 // Get the POST data
 $data = json_decode(file_get_contents('php://input'), true);
-$file=$event_base."/nylas-event-created.log";
+
+$file= $logs_base . "/nylas-event-created.log";
 file_put_contents($file, json_encode($data).PHP_EOL, FILE_APPEND | LOCK_EX);
 
 
-
-?>
