@@ -24,7 +24,7 @@ $message_id = $data['deltas'][0]['object_data']['id'];
 $message = getMessageById($message_id, $token, $nylas_api_server);
 
 
-$file = $message_base."/nylas-message-updated.log";
+$file= $logs_base . "/nylas-message-updated.log";
 
 file_put_contents($file, "*****************************************".PHP_EOL, FILE_APPEND | LOCK_EX);
 file_put_contents($file, json_encode($message['subject']).PHP_EOL, FILE_APPEND | LOCK_EX);

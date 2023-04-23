@@ -16,7 +16,7 @@ if ($challenge_parameter) {
 
 // Get the POST data
 $data = json_decode(file_get_contents('php://input'), true);
-$file=$message_base."/nylas-message-created.log";
+$file = $logs_base . "/nylas-message-created.log";
 file_put_contents($file, json_encode($data).PHP_EOL, FILE_APPEND | LOCK_EX);
 
 
