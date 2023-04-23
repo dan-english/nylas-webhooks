@@ -1,5 +1,13 @@
 <?php
 header('Content-type: application/json');
+$nylas_header = $_SERVER['HTTP_X_NYLAS_SIGNATURE'];
+$nylas_signature = 'this_came_from_nylas';
+
+if($nylas_header !== $nylas_signature) {
+    header('HTTP/1.0 403 Forbidden');
+    print("Nylas Signature In Header Does Not Match");
+    exit();
+}
 
 $logs_base="/home/dan/projects/nylas/webhooks/logs";
 
